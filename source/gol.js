@@ -27,24 +27,37 @@ function generateCheckboxes(width, height) {
 	return cells;
 }
 
-function play() {
+function playPause() {
 	if (window.intervalId === null) {
 		window.intervalId = window.setInterval(tick, 1000);
-	}
-}
-
-function pause() {
-	if (window.intervalId !== null) {
+	} else if (window.intervalId !== null) {
 		window.clearInterval(window.intervalId);
 		window.intervalId = null;
 	}
 }
+window.addEventListener("keydown", function(e) {
+	if (e.key.toLowerCase() == "p") {
+		playPause();
+	}
+});
+
+function getCell(x, y) {
+	return window.cells[y][x];
+}
+
+function getCellNeighbors(x, y) {
+	return [getCell(x-1, y-1), getCell(x, y-1), getCell(x+1, y-1), getCell(x-1, y), getCell(x+1, y), getCell(x-1, y+1), getCell(x, y+1), getCell(x+1, y+1)];
+}
 
 function tick() {
+	for (let j = 0; j < cells.length; j++) {
+		for (let i = 0; i < cells[j].length; i++) {
+			let cell = cells[j][i];
+		}
+	}
 }
 
 (function main() {
 	window.cells = generateCheckboxes(83, 31);
 	window.intervalId = null;
-	console.log(cells);
 })();
