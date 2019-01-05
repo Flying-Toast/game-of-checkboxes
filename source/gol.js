@@ -50,14 +50,32 @@ function getCellNeighbors(x, y) {
 }
 
 function tick() {
-	for (let j = 0; j < cells.length; j++) {
-		for (let i = 0; i < cells[j].length; i++) {
+	for (let j = 1; j < cells.length -1; j++) {
+		for (let i = 1; i < cells[j].length -1; i++) {
 			let cell = cells[j][i];
+			let neighbors = getCellNeighbors(i, j);
+			let livingNeighborCount = 0;
+
+			for (let h = 0; h < neighbors.length; h++) {
+				if (!neighbors[h].isDead()) {
+					livingNeighborCount++;
+				}
+			}
+
+			if (livingNeighborCount < 2 || livingNeighborCount > 3) {
+				cell.die();
+			}
+
+			if (livingNeighborCount === 3) {
+				cell.live();
+			}
 		}
 	}
 }
 
-(function main() {
+function main() {
 	window.cells = generateCheckboxes(83, 31);
 	window.intervalId = null;
-})();
+}
+
+main();
