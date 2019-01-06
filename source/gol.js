@@ -33,17 +33,12 @@ function generateCheckboxes(width, height) {
 
 function playPause() {
 	if (window.intervalId === null) {
-		window.intervalId = window.setInterval(tick, 1000);
+		window.intervalId = window.setInterval(tick, 100);
 	} else if (window.intervalId !== null) {
 		window.clearInterval(window.intervalId);
 		window.intervalId = null;
 	}
 }
-window.addEventListener("keydown", function(e) {
-	if (e.key.toLowerCase() == "p") {
-		playPause();
-	}
-});
 
 function getCell(x, y) {
 	let cell = undefined;
@@ -105,7 +100,7 @@ function tick() {
 }
 
 function main() {
-	window.cells = generateCheckboxes(83, 31);
+	window.cells = generateCheckboxes(83, 28);
 	window.intervalId = null;
 }
 
