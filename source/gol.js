@@ -42,7 +42,19 @@ window.addEventListener("keydown", function(e) {
 });
 
 function getCell(x, y) {
-	return window.cells[y][x];
+	let cell = undefined;
+
+	try {
+		cell =  window.cells[y][x];
+	} catch (e) {}
+
+	if (cell === undefined) {
+		let inp = document.createElement("input");
+		inp.type = "checkbox";
+		cell = new Cell(inp);
+	}
+
+	return cell;
 }
 
 function getCellNeighbors(x, y) {
@@ -50,8 +62,8 @@ function getCellNeighbors(x, y) {
 }
 
 function tick() {
-	for (let j = 1; j < cells.length -1; j++) {
-		for (let i = 1; i < cells[j].length -1; i++) {
+	for (let j = 0; j < cells.length; j++) {
+		for (let i = 0; i < cells[j].length; i++) {
 			let cell = cells[j][i];
 			let neighbors = getCellNeighbors(i, j);
 			let livingNeighborCount = 0;
