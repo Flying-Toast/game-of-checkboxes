@@ -1,9 +1,13 @@
 function Cell(checkboxElement) {
 	this.checkboxElement = checkboxElement;
+	this.dieNext = false;
+	this.liveNext = false;
 }
 Cell.prototype.isDead = function() {return !this.checkboxElement.checked};
-Cell.prototype.die = function() {this.checkboxElement.checked = false;}
-Cell.prototype.live = function() {this.checkboxElement.checked = true;}
+Cell.prototype.die = function() {this.checkboxElement.checked = false; this.dieNext = false;}
+Cell.prototype.dieNextTick = function() {this.dieNext = true;}
+Cell.prototype.live = function() {this.checkboxElement.checked = true; this.liveNext = false;}
+Cell.prototype.liveNextTick = function() {this.liveNext = true;}
 
 function generateCheckboxes(width, height) {
 	let checkboxWrapper = document.querySelector("#checkboxes");
@@ -75,10 +79,25 @@ function tick() {
 			}
 
 			if (livingNeighborCount < 2 || livingNeighborCount > 3) {
-				cell.die();
+				cell.dieNextTick();
 			}
 
 			if (livingNeighborCount === 3) {
+				cell.liveNextTick();
+			}
+		}
+	}
+
+
+	for (let j = 0; j < cells.length; j++) {
+		for (let i = 0; i < cells[j].length; i++) {
+			let cell = cells[j][i];
+
+			if (cell.dieNext) {
+				cell.die();
+			}
+
+			if (cell.liveNext) {
 				cell.live();
 			}
 		}
