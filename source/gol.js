@@ -2,12 +2,29 @@ function Cell(checkboxElement) {
 	this.checkboxElement = checkboxElement;
 	this.dieNext = false;
 	this.liveNext = false;
+
+	this.isDead = function() {
+		return !this.checkboxElement.checked;
+	};
+
+	this.die = function() {
+		this.checkboxElement.checked = false;
+		this.dieNext = false;
+	};
+
+	this.dieNextTick = function() {
+		this.dieNext = true;
+	};
+
+	this.live = function() {
+		this.checkboxElement.checked = true;
+		this.liveNext = false;
+	};
+
+	this.liveNextTick = function() {
+		this.liveNext = true;
+	};
 }
-Cell.prototype.isDead = function() {return !this.checkboxElement.checked};
-Cell.prototype.die = function() {this.checkboxElement.checked = false; this.dieNext = false;}
-Cell.prototype.dieNextTick = function() {this.dieNext = true;}
-Cell.prototype.live = function() {this.checkboxElement.checked = true; this.liveNext = false;}
-Cell.prototype.liveNextTick = function() {this.liveNext = true;}
 
 function generateCheckboxes(width, height) {
 	let checkboxWrapper = document.querySelector("#checkboxes");
@@ -104,4 +121,4 @@ function main() {
 	window.intervalId = null;
 }
 
-main();
+main();//simulate an entry point
