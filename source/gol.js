@@ -1,29 +1,31 @@
-function Cell(checkboxElement) {
-	this.checkboxElement = checkboxElement;
-	this.dieNext = false;
-	this.liveNext = false;
+class Cell {
+	constructor(checkboxElement) {
+		this.checkboxElement = checkboxElement;
+		this.dieNext = false;
+		this.liveNext = false;
+	}
 
-	this.isDead = function() {
+	isDead() {
 		return !this.checkboxElement.checked;
-	};
+	}
 
-	this.die = function() {
+	die() {
 		this.checkboxElement.checked = false;
 		this.dieNext = false;
-	};
+	}
 
-	this.dieNextTick = function() {
+	dieNextTick() {
 		this.dieNext = true;
-	};
+	}
 
-	this.live = function() {
+	live() {
 		this.checkboxElement.checked = true;
 		this.liveNext = false;
-	};
+	}
 
-	this.liveNextTick = function() {
+	liveNextTick() {
 		this.liveNext = true;
-	};
+	}
 }
 
 function generateCheckboxes(width, height) {
